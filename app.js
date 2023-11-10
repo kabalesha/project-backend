@@ -1,6 +1,9 @@
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
+import errorGlobal from "./middlewares/errorGlobal.js";
+import errorNotFound from "./middlewares/errorNotFound.js";
+
 import "dotenv/config";
 
 // import authRouter from "./routes/api/auth-router.js";
@@ -17,13 +20,7 @@ app.use(express.json());
 // app.use("/api/auth", authRouter);
 // app.use("/api/movies", moviesRouter);
 
-app.use((req, res) => {
-  res.status(404).json({ message: "Not found" });
-});
-
-app.use((err, req, res, next) => {
-  const { status = 500, message = "Server error" } = err;
-  res.status(status).json({ message });
-});
+app.use(errorNotFound);
+app.use(errorGlobal);
 
 export default app;
