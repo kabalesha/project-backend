@@ -3,7 +3,6 @@ import logger from "morgan";
 import cors from "cors";
 import errorGlobal from "./middlewares/errorGlobal.js";
 import errorNotFound from "./middlewares/errorNotFound.js";
-
 import "dotenv/config";
 
 // import authRouter from "./routes/api/auth-router.js";
