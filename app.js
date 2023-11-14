@@ -10,10 +10,12 @@ import swaggerDocument from "./swagger.json" assert { type: 'json' };
 import userRouter from "./routes/api/user-router.js";
 // import moviesRouter from "./routes/api/movies-router.js";
 
+
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
+app.use(express.static("public"));
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
@@ -25,6 +27,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/user", userRouter);
 
 // app.use("/api/movies", moviesRouter);
+app.use("/api/auth/", authRouter);
+
 
 app.use(errorNotFound);
 app.use(errorGlobal);

@@ -1,62 +1,56 @@
+import * as yup from "yup";
 import { Schema, model } from "mongoose";
-import Joi from "joi";
-import handleMongooseError from '../helpers/handleMongooseError.js';
-import runValidatorsAtUpdate from '../helpers/runValidatorsAtUpdate.js';
 
-const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const passwordValidationRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+const emailValidationRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-const userSchema = new Schema({
-        password: {
-          type: String,
-          minlength: 6,
-          required: [true, 'Password is required'],
-        },
-        email: {
-          type: String,
-          match: emailRegexp,
-          required: [true, 'Email is required'],
-          unique: true,
-        },
-        subscription: {
-          type: String,
-          enum: ["starter", "pro", "business"],
-          default: "starter"
-        },
-        // token: {
-        //   type: String,
-        //   default: null,
-        // },
-        avatarURL: {
-          type: String,
-        },
-        verify: {
-          type: Boolean,
-          default: false,
-          },
-        verificationToken: {
-          type: String,
-          required: [true, 'Verify token is required'],
-          },
-}, {versionKey: false, timestamps: true})
+const schemaUser = new Schema(
+  {
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Email is required"],
+    },
+    password: {
+      type: String,
+      required: [true, "Set password for user"],
+    },
 
-userSchema.post('save', handleMongooseError);
-userSchema.pre('findOneAndUpdate', runValidatorsAtUpdate);
-userSchema.post('findOneAndUpdate', handleMongooseError);
+    token: String,
 
-export const registerSchema = Joi.object({
-    email: Joi.string().pattern(emailRegexp).required(),
-    password: Joi.string().min(6).required(),
-})
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      required: [true, "Verify token is required"],
+    },
+  },
+  { versionKey: false, timestamps: true }
+);
 
-export const loginSchema = Joi.object({
-    email: Joi.string().pattern(emailRegexp).required(),
-    password: Joi.string().min(6).required(),
-})
+const UserNew = model("user", schemaUser);
 
-export const emailSchema = Joi.object({
-  email: Joi.string().pattern(emailRegexp).required(),
-})
+const userSingUpSchema = yup.object().shape({
+  email: yup.string().email(emailValidationRegex).required("Email is required"),
+  password: yup.string().min(8).max(48).required("Password is required"),
+  repeatPassword: yup
+    .string()
+    .min(8)
+    .max(48)
+    .required("RepeatPassword is required"),
+});
 
-const User = model("user", userSchema);
+const userSingInSchema = yup.object().shape({
+  email: yup.string().email(emailValidationRegex).required("Email is required"),
+  password: yup.string().min(8).max(48).required("Password is required"),
+});
 
-export default User;
+const user = {
+  UserNew,
+  userSingUpSchema,
+  userSingInSchema,
+};
+
+export default user;
