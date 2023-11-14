@@ -36,24 +36,31 @@ const addAvatar = async (req, res) => {
     })
  }
 
- const updateAvatar = async (req, res) => {
-    const {_id} = req.user;
-    const { path: tempUpload, originalname } = req.file;
-    const filename = `${_id}_${originalname}`;
-    const resultUpload = path.join(avatarsPath, filename);
-    await fs.rename(tempUpload, resultUpload);
-    const image = await Jimp.read(resultUpload);
-    image.cover(250, 250).write(resultUpload);
-    const avatarURL = path.join("avatars", filename);
-    await User.findByIdAndUpdate(_id, {avatarURL});
+ const updateUserData = async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const updatedData = await User.findOneAndUpdate({ _id }, req.body, {
+      new: true,
+    });
 
-    res.json({
-        avatarURL,
-    })
- }
+    const { name, email, gender, dailyNorma } = updatedData;
+
+  
+
+    await updatedData.save();
+
+    if (updatedData) {
+      res.status(201).json(updatedData);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 export default {
     addAvatar: ctrlWrapper(addAvatar),
     getCurrent: ctrlWrapper(getCurrent),
-    updateAvatar: ctrlWrapper(updateAvatar),
+    updateUserData: ctrlWrapper(updateUserData),
 }
