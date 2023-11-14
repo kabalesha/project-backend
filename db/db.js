@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const { DB_HOST } = process.env;
+const DB_HOST = process.env.DB_HOST;
 
 mongoose
   .connect(DB_HOST)
@@ -8,4 +8,5 @@ mongoose
   .catch((err) => {
     console.log(err);
     process.exit(1);
+    console.log(err);
   });
