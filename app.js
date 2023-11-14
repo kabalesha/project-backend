@@ -5,11 +5,10 @@ import errorGlobal from "./middlewares/errorGlobal.js";
 import errorNotFound from "./middlewares/errorNotFound.js";
 import "dotenv/config";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./swagger.json" assert { type: 'json' };
+import swaggerDocument from "./swagger.json" assert { type: "json" };
 
 import userRouter from "./routes/api/user-router.js";
 // import moviesRouter from "./routes/api/movies-router.js";
-
 
 const app = express();
 
@@ -27,8 +26,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/api/user", userRouter);
 
 // app.use("/api/movies", moviesRouter);
-app.use("/api/auth/", authRouter);
-
+// app.use("/api/auth/", authRouter);
 
 app.use(errorNotFound);
 app.use(errorGlobal);
