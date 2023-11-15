@@ -1,7 +1,7 @@
 import express from "express";
 import isEmptyBody from "../../middlewares/isEmptyBody.js";
 import authController from "../../controllers/authControllers.js";
-import user from "../../models/User.js";
+import User from "../../models/User.js";
 import validateBodyAuth from "../../middlewares/validateBodyAuth.js";
 import authenticate from "../../middlewares/authenticate.js";
 
