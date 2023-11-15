@@ -32,7 +32,7 @@ const schemaUser = new Schema(
 
 const UserNew = model("user", schemaUser);
 
-const userSingUpSchema = yup.object().shape({
+const userSignUpSchema = yup.object().shape({
   email: yup.string().email(emailValidationRegex).required("Email is required"),
   password: yup.string().min(8).max(48).required("Password is required"),
   repeatPassword: yup
@@ -42,15 +42,15 @@ const userSingUpSchema = yup.object().shape({
     .required("RepeatPassword is required"),
 });
 
-const userSingInSchema = yup.object().shape({
+const userSignInSchema = yup.object().shape({
   email: yup.string().email(emailValidationRegex).required("Email is required"),
   password: yup.string().min(8).max(48).required("Password is required"),
 });
 
 const user = {
   UserNew,
-  userSingUpSchema,
-  userSingInSchema,
+  userSignUpSchema,
+  userSignInSchema,
 };
 
 export default user;

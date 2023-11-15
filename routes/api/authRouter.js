@@ -7,43 +7,19 @@ import validateBodyAuth from "../../middlewares/validateBodyAuth.js";
 const router = express.Router();
 
 router.post(
-  "/singup",
+  "/signup",
   isEmptyBody,
-  validateBodyAuth(User.userSingUpSchema),
-  authController.singUp
+  validateBodyAuth(User.userSignUpSchema),
+  authController.signUp
 );
 
 router.post(
-  "/singin",
+  "/signin",
   isEmptyBody,
-  validateBodyAuth(User.userSingInSchema),
-  authController.singIn
+  validateBodyAuth(User.userSignInSchema),
+  authController.signIn
 );
 
-// router.post("/logout", authentificate, authController.logout);
-
-// router.get("/current", authentificate, authController.current);
-
-// router
-//   .route("/")
-//   .get(authentificate, authController.findUsersStatusFavorite)
-//   .patch(authentificate, authController.updateUserSubscription);
-
-// router.patch(
-//   "/avatars",
-//   authentificate,
-//   storage.single("avatar"),
-//   authController.updateAvatar
-// );
-
-// router.get("/verify/:verificationToken", authController.verify);
-
-// router.post(
-//   "/verify",
-//   validateBodyAuth(userEmailSchema),
-//   authController.resendVerify
-// );
-
-// module.exports = router;
+// router.post("/logout", authController.logout);
 
 export default router;
