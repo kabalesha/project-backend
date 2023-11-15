@@ -23,4 +23,6 @@ router.post(
 
 router.post("/logout", authenticate, authController.logout);
 
+router.get("/verify/:verificationToken", authController.verify);
+
 export default router;
