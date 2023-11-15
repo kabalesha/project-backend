@@ -1,7 +1,7 @@
 import express from "express";
 import isEmptyBody from "../../middlewares/isEmptyBody.js";
 import authController from "../../controllers/authControllers.js";
-import User from "../../models/User.js";
+import user from "../../models/User.js";
 import validateBodyAuth from "../../middlewares/validateBodyAuth.js";
 
 const router = express.Router();
@@ -9,14 +9,14 @@ const router = express.Router();
 router.post(
   "/singup",
   isEmptyBody,
-  validateBodyAuth(User.userSingUpSchema),
+  validateBodyAuth(user.userSingUpSchema),
   authController.singUp
 );
 
 router.post(
   "/singin",
   isEmptyBody,
-  validateBodyAuth(User.userSingInSchema),
+  validateBodyAuth(user.userSingInSchema),
   authController.singIn
 );
 

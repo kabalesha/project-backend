@@ -8,5 +8,4 @@ mongoose
   .catch((err) => {
     console.log(err);
     process.exit(1);
-    console.log(err);
   });
