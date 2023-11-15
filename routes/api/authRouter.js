@@ -3,26 +3,15 @@ import isEmptyBody from "../../middlewares/isEmptyBody.js";
 import authController from "../../controllers/authControllers.js";
 import user from "../../models/User.js";
 import validateBodyAuth from "../../middlewares/validateBodyAuth.js";
+import authenticate from "../../middlewares/authenticate.js";
 
 const router = express.Router();
 
-router.post(
-  "/singup",
-  isEmptyBody,
-  validateBodyAuth(user.userSingUpSchema),
-  authController.singUp
-);
+router.post("/singup", isEmptyBody, validateBodyAuth(user.userSingUpSchema),
+  authController.singUp);
 
-router.post(
-  "/singin",
-  isEmptyBody,
-  validateBodyAuth(user.userSingInSchema),
-  authController.singIn
-);
-
-// router.post("/logout", authentificate, authController.logout);
-
-// router.get("/current", authentificate, authController.current);
+router.post("/singin", isEmptyBody, validateBodyAuth(user.userSingInSchema),
+  authController.singIn);
 
 // router
 //   .route("/")
