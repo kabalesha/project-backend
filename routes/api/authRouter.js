@@ -7,32 +7,20 @@ import authenticate from "../../middlewares/authenticate.js";
 
 const router = express.Router();
 
-router.post("/singup", isEmptyBody, validateBodyAuth(user.userSingUpSchema),
-  authController.singUp);
+router.post(
+  "/signup",
+  isEmptyBody,
+  validateBodyAuth(User.userSignUpSchema),
+  authController.signUp
+);
 
-router.post("/singin", isEmptyBody, validateBodyAuth(user.userSingInSchema),
-  authController.singIn);
+router.post(
+  "/signin",
+  isEmptyBody,
+  validateBodyAuth(User.userSignInSchema),
+  authController.signIn
+);
 
-// router
-//   .route("/")
-//   .get(authentificate, authController.findUsersStatusFavorite)
-//   .patch(authentificate, authController.updateUserSubscription);
-
-// router.patch(
-//   "/avatars",
-//   authentificate,
-//   storage.single("avatar"),
-//   authController.updateAvatar
-// );
-
-// router.get("/verify/:verificationToken", authController.verify);
-
-// router.post(
-//   "/verify",
-//   validateBodyAuth(userEmailSchema),
-//   authController.resendVerify
-// );
-
-// module.exports = router;
+// router.post("/logout", authController.logout);
 
 export default router;

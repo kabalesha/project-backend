@@ -6,13 +6,14 @@ import jwt from "jsonwebtoken";
 
 const { JWT_SECRET } = process.env;
 
-const singUp = async (body) => {
+const signUp = async (body) => {
   const { email, password, repeatPassword } = body;
-  if (password !== repeatPassword)
-    throw HttpError(409, `Passwords do not match`);
 
   const user = await User.UserNew.findOne({ email });
   if (user) throw HttpError(409, `Email "${email}" in use`);
+
+  if (password !== repeatPassword)
+    throw HttpError(409, `Passwords do not match`);
 
   const hashPassword = await bcryptjs.hash(password, 10);
   const verificationToken = uuidv4();
@@ -24,9 +25,8 @@ const singUp = async (body) => {
   });
 };
 
-const singIn = async (body) => {
+const signIn = async (body) => {
   const userFind = await User.UserNew.findOne({ email: body.email });
-
   if (!userFind) throw HttpError(401, "Email or password is wrong");
 
   const comparePassword = await bcryptjs.compare(
@@ -37,7 +37,7 @@ const singIn = async (body) => {
   if (!comparePassword) {
     throw HttpError(401, "Email or password is wrong");
   }
-
+  console.log("userFind._id :>> ", userFind);
   const payload = {
     id: userFind._id,
   };
@@ -53,8 +53,8 @@ const singIn = async (body) => {
 };
 
 const authServices = {
-  singUp,
-  singIn,
+  signUp,
+  signIn,
 };
 
 export default authServices;
