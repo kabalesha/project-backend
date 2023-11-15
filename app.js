@@ -7,7 +7,7 @@ import errorNotFound from "./middlewares/errorNotFound.js";
 import "dotenv/config";
 
 // import authRouter from "./routes/api/auth-router.js";
-// import moviesRouter from "./routes/api/movies-router.js";
+import waterRouter from "./routes/api/water-router.js";
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.json());
 
 // app.use("/api/auth", authRouter);
-// app.use("/api/movies", moviesRouter);
+app.use("/api/water", waterRouter);
 
 app.use(errorNotFound);
 app.use(errorGlobal);
