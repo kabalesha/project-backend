@@ -1,5 +1,4 @@
 import User from "../models/User.js";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import {HttpError} from "../middlewares/index.js";
 import ControllerWrapper from "../utils/ControllerWrapper.js";
@@ -17,6 +16,8 @@ const addAvatar = async (req, res) => {
     try {
       const { _id } = req.user;
       const avatarURL = req.file.path;
+      // console.log(req.user);
+      // console.log(req.file.path);
   
       await User.UserNew.findByIdAndUpdate(_id, { avatarURL }, { new: true });
       res.status(200).json({ avatarURL });
@@ -39,9 +40,9 @@ const addAvatar = async (req, res) => {
 
  const updateUserData = async (req, res) => {
   try {
-    const { id } = req.user;
+    const { _id } = req.user;
     // console.log(id);
-    const updatedData = await User.UserNew.findOneAndUpdate({ id }, req.body, {
+    const updatedData = await User.UserNew.findOneAndUpdate({ _id }, req.body, {
       new: true,
     });
 

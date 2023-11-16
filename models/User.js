@@ -6,6 +6,10 @@ const emailValidationRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const schemaUser = new Schema(
   {
+    name: {
+      type: String,
+      required: [true, "Name is a required field"],
+    },
     email: {
       type: String,
       unique: true,
@@ -28,6 +32,7 @@ const schemaUser = new Schema(
     },
     avatarURL: {
       type: String,
+      default: null,
     },
   },
   { versionKey: false, timestamps: true }
