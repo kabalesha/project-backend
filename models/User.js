@@ -38,6 +38,14 @@ const schemaUser = new Schema(
       type: String,
       default: null,
     },
+    dailyNorma: {
+      type: String,
+      default: "2L",
+    },
+    gender: {
+      type: String,
+      default: "man",
+    },
   },
   { versionKey: false, timestamps: true }
 );
