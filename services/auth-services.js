@@ -37,7 +37,7 @@ const signIn = async (body) => {
   if (!comparePassword) {
     throw HttpError(401, "Email or password is wrong");
   }
-  console.log("userFind._id :>> ", userFind);
+
   const payload = {
     id: userFind._id,
   };
@@ -52,9 +52,32 @@ const signIn = async (body) => {
   };
 };
 
+const logout = async (userId) => {
+  await User.UserNew.findByIdAndUpdate({ _id: userId }, { token: "" });
+};
+
+const verifyUser = async (verificationToken) => {
+  const userVerify = await User.UserNew.findOne({ verificationToken });
+
+  if (!userVerify) throw HttpError(404, "User not found");
+
+  const user = await User.UserNew.findByIdAndUpdate(
+    userVerify._id,
+    {
+      verify: true,
+      verificationToken: null,
+    },
+    { new: true }
+  );
+
+  return user;
+};
+
 const authServices = {
   signUp,
   signIn,
+  logout,
+  verifyUser,
 };
 
 export default authServices;

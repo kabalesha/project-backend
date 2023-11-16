@@ -7,7 +7,7 @@ import "dotenv/config";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger.json" assert { type: "json" };
 
-import authRouter from "./routes/api/authRouter.js";
+import authRouter from "./routes/api/auth-router.js";
 import waterRouter from "./routes/api/water-router.js";
 import userRouter from "./routes/api/user-router.js";
 
