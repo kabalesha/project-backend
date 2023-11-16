@@ -12,7 +12,7 @@ const getDailyNorma = async (req, res) => {
 
 const getAll = async (req, res) => {
   const { _id: owner } = req.user;
-  const result = await Movie.find(owner);
+  const result = await WaterProfile.find(owner);
   res.json(result);
 };
 
