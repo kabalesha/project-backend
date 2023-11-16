@@ -1,20 +1,31 @@
 import express from "express";
+import { authenticate, isValidId } from "../../middlewares/index.js";
+import { validateBody } from "../../decorators/index.js";
+import waterControllers from "../../controllers/water-controllers.js";
+import waterAddSchema from "../../models/water.js";
 const router = express.Router();
 
-// router.use(authenticate);
+const waterAddValidate = validateBody(waterAddSchema);
+
+router.use(authenticate);
 
 router.get("/");
 
-router.get("/:waterId");
+router.get("/:waterId", isValidId, waterControllers.getById);
 
-router.post("/");
+router.post("/", waterAddValidate, waterControllers.addWater);
 
-router.patch("/:waterId");
+router.patch(
+  "/:waterId",
+  isValidId,
+  waterAddValidate,
+  waterControllers.updateById
+);
 
-router.delete("/:waterId");
+router.delete("/:waterId", isValidId, waterControllers.deleteById);
 
-router.get("/dailyNorma");
+router.get("/dailyNorma", waterControllers.getDailyNorma);
 
-router.patch("/dailyNorma");
+router.patch("/dailyNorma", waterControllers.setDailyNorma);
 
 export default router;

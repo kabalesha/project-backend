@@ -2,11 +2,17 @@ import Water from "../models/water.js";
 import WaterProfile from "../models/waterProfile.js";
 
 import { HttpError } from "../middlewares/index.js";
-import { ctrlWrapper } from "../decorators/index.js";
+import ControllerWrapper from "../utils/ControllerWrapper.js";
 
 const getDailyNorma = async (req, res) => {
   const { _id: owner } = req.user;
   const result = await WaterProfile.findOne(owner);
+  res.json(result);
+};
+
+const getAll = async (req, res) => {
+  const { _id: owner } = req.user;
+  const result = await Movie.find(owner);
   res.json(result);
 };
 
@@ -61,6 +67,11 @@ const deleteById = async (req, res) => {
 };
 
 export default {
-  updateById: ctrlWrapper(updateById),
-  deleteById: ctrlWrapper(deleteById),
+  updateById: ControllerWrapper(updateById),
+  deleteById: ControllerWrapper(deleteById),
+  getAll: ControllerWrapper(getAll),
+  addWater: ControllerWrapper(addWater),
+  getDailyNorma: ControllerWrapper(getDailyNorma),
+  setDailyNorma: ControllerWrapper(setDailyNorma),
+  getById: ControllerWrapper(getById),
 };
