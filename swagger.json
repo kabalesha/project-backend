@@ -1,437 +1,780 @@
 {
-    "openapi": "3.0.1",
-    "info": {
-      "version": "2.0.2",
-      "title": "Swagger WaterTraсker",
-      "description": "Showing off WaterTraсker work",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.0.2",
+    "title": "Swagger WaterTraсker",
+    "description": "Showing off WaterTraсker work",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json", "multipart/form-data"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3000" }],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
     },
-    "consumes": ["application/json", "multipart/form-data"],
-    "produces": ["application/json"],
-    "servers": [{ "url": "http://localhost:3000" }],
-    "tags": [
-      {
-        "name": "Auth",
-        "description": "Authorization endpoints"
-      }
-    ],
-    "paths": {
-      "/auth/register": {
-        "post": {
-          "tags": ["Auth"],
-          "summary": "User registration",
-          "parameters": [],
-          "requestBody": {
-            "description": "Registration's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegistrationRequest"
-                }
+    {
+      "name": "User",
+      "description": "User endpoints"
+     },
+     {
+      "name": "Water",
+      "description": "Water endpoints"
+     }
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
               }
-            }
-          },
-          "responses": {
-            "201": {
-              "description": "Successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/RegistrationResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                    "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                    }
-                }
-              }
-            },
-            "404": {
-                "description": "Not found",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/schemas/errorNotFoundResponse"
-                    }
-                  }
-                }
-              },
-            "409": {
-              "description": "Provided email already exists",
-              "content": {
-                "application/json": {
-                    "schema": {
-                      "$ref": "#/components/schemas/errorConflictResponse"
-                    }
-                  }
-              }
-            },
-            "500": {
-                "description": "Internal Server Error",
-                "content": {
-                  "application/json": {
-                    "schema": {
-                      "$ref": "#/components/schemas/errorServerResponse"
-                    }
-                  }
-                }
-              }
-          }
-        }
-      },
-      "/auth/login": {
-        "post": {
-          "tags": ["Users"],
-          "summary": "User login",
-          "parameters": [],
-          "requestBody": {
-            "description": "Login's object",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Login successful",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/LoginResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/auth/current": {
-        "get": {
-          "tags": ["Users"],
-          "summary": "Get current user",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "responses": {
-            "200": {
-              "description": "Successful operation, get current user",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/CurrentUserResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/auth/create": {
-        "post": {
-          "tags": ["Users"],
-          "summary": "User data create",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Create user's object-data",
-            "required": true,
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CreateUserDataRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation, user  data created",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/CreateUserDataResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/auth/update": {
-        "patch": {
-          "tags": ["Users"],
-          "summary": "User data create",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Create user's object-data (multipart/form-data)",
-            "required": true,
-            "content": {
-              "multipart/form-data": {
-                "schema": {
-                  "$ref": "#/components/schemas/UpdateUserDataRequest"
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation, user  data updated",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/successfulUpdateResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorBadRequestResponse"
-                  }
-                }
-              }
-            },
-            "401": {
-              "description": "Not authorized ",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "/auth/logout": {
-        "post": {
-          "tags": ["Users"],
-          "summary": "User logout",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "responses": {
-            "204": {
-              "description": "Logout successful, No Content"
-            },
-            "401": {
-              "description": "Not authorized (email or password is wrong)",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorUnauthorizedResponse"
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorNotFoundResponse"
-                  }
-                }
-              }
-            },
-            "500": {
-              "description": "Internal Server Error",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/errorServerResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "components": {
-      "schemas": {
-        "RegistrationRequest": {
-          "type": "object",
-          "required": ["email", "password"],
-          "properties": {
-            "email": {
-              "type": "string",
-              "description": "User's email",
-              "format": "email"
-            },
-            "password": {
-              "type": "string",
-              "description": "User's password",
-              "example": "qwerty123"
             }
           }
         },
-        "RegistrationResponse": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email"
-              },
-              "userId": {
-                "type": "number",
-                "description": "User's id",
-                "example": "32143232436545474"
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
               }
             }
           },
-          "example": [
-            { "email": "1@gmail.com", "userId": "1" },
-            { "email": "2@gmail.com", "userId": "2" }
-          ]
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                  "schema": {
+                  "$ref": "#/components/schemas/errorBadRequestResponse"
+                  }
+              }
+            }
+          },
+          "404": {
+              "description": "Not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorNotFoundResponse"
+                  }
+                }
+              }
+            },
+          "409": {
+            "description": "Provided email already exists",
+            "content": {
+              "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorConflictResponse"
+                  }
+                }
+            }
+          },
+          "500": {
+              "description": "Internal Server Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/errorServerResponse"
+                  }
+                }
+              }
+            }
         }
+      }
+    },
+    "/verify/:verificationToken": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Verify email with a verification token",
+        "parameters": [
+          {
+            "in": "path",
+            "name": ":verificationToken",
+            "required": true,
+            "type": "string",
+            "description":	"Verification token"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+               "schema": {
+                "$ref": "#/components/schemas/VerifyEmailResponse"
+               }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+               }
+            }
+          }
+        }
+      }
       },
-      "securitySchemes": {
-        "Bearer": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
+    "/auth/signin": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBadRequestResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/current": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get current user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation, get current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized (email or password is wrong)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/add-avatar": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "User add avatar",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Create user's object-data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDataRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation, user  data created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateUserDataResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized (email or password is wrong)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/update": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "User update data",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Create user's object-data (multipart/form-data)",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserDataRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation, user  data updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/successfulUpdateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorBadRequestResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Not authorized ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorServerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "Logout successful, No Content"
+          },
+          "401": {
+            "description": "Not authorized (email or password is wrong)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorUnauthorizedResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorServerResponse"
+                }
+              }
+            }
+          }
         }
       }
     }
+  },
+  "/water": {
+    "get": {
+      "tags": ["Water"],
+      "summary": "Get Day Water Norma",
+      "parameters": [],
+      "security": [{ "Bearer": [] }],
+      "requestBody": {},
+      "responses": {
+        "200": {
+          "description": "ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDiaryByDateResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/errorNotFoundResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/water/get/:waterId": {
+    "get": {
+      "tags": ["Water"],
+      "summary": "Get All",
+      "parameters": [],
+      "security": [{ "Bearer": [] }],
+      "requestBody": {},
+      "responses": {
+        "200": {
+          "description": "ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDiaryByDateResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/errorNotFoundResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "/water/add": {
+    "post": {
+      "tags": ["Water"],
+      "summary": "Add Water",
+      "parameters": [],
+      "security": [{ "Bearer": [] }],
+      "requestBody": {},
+      "responses": {
+        "201": {
+          "description": "ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDiaryByDateResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/errorNotFoundResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "water/update/:waterId": {
+    "patch": {
+      "tags": ["Water"],
+      "summary": "Update Water by Id",
+      "parameters": [],
+      "security": [{ "Bearer": [] }],
+      "requestBody": {},
+      "responses": {
+        "201": {
+          "description": "ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDiaryByDateResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/errorNotFoundResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "water/delete/:waterId": {
+    "delete": {
+      "tags": ["Water"],
+      "summary": "Delete Water by Id",
+      "parameters": [],
+      "security": [{ "Bearer": [] }],
+      "requestBody": {},
+      "responses": {
+        "201": {
+          "description": "ok",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetDiaryByDateResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/errorNotFoundResponse"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password", "repeatPassword"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "ww1234567"
+          },
+          "repeatPassword": {
+            "type": "string",
+            "description": "User password",
+            "example": "ww1234567"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email"
+              }
+            }	
+          },
+          "message": {
+            "type": "string",
+            "descroption": "Message"
+          } 
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "ww1234567"
+          }
+        }
+      },
+      "LogoutRequest": {
+        "type": "object",
+        "required": ["_id"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User id"
+          }
+        }
+      },
+      "AvatarsRequest": {
+        "type": "object",
+        "required": ["_id", "avatarURL"],
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "User id"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "New avatar URL"
+          }
+        }
+      },
+      "VerifyEmailRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          }
+        }
+      },       
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User token"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "User name"
+              },
+              "email": {
+                "type": "string",
+                "description": "User email"
+              },
+              "avatar": {
+                "type": "string",
+                "descroption": "Avatar URL"
+              }
+            }	
+          }					 
+        }
+      },
+      "CurrentResponse": {
+        "type": "object",
+        "required": ["name", "email", "avatarURL"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "Avatar URL"
+          }
+        }
+      },
+      "LogoutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "descroption": "Message",
+            "example": "logout was successfull"
+          }
+        }
+      },
+      "AvatarsResponse": {
+        "type": "object",
+        "properties": {
+          "avatarURL": {
+            "type": "string",
+            "descroption": "New avatar URL"
+          }
+        }
+      },
+      "VerifyEmailResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "descroption": "Message"
+          }
+        }
+      },       
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "descroption": "Message"
+          }
+        }
+      }			
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
   }
+}
