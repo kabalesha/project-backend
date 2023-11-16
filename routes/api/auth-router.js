@@ -1,6 +1,6 @@
 import express from "express";
 import isEmptyBody from "../../middlewares/isEmptyBody.js";
-import authController from "../../controllers/authControllers.js";
+import authController from "../../controllers/auth-controllers.js";
 import User from "../../models/User.js";
 import validateBodyAuth from "../../middlewares/validateBodyAuth.js";
 import authenticate from "../../middlewares/authenticate.js";
@@ -21,6 +21,8 @@ router.post(
   authController.signIn
 );
 
-// router.post("/logout", authController.logout);
+router.post("/logout", authenticate, authController.logout);
+
+router.get("/verify/:verificationToken", authController.verify);
 
 export default router;
