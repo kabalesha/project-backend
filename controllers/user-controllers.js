@@ -16,8 +16,6 @@ const addAvatar = async (req, res) => {
     try {
       const { _id } = req.user;
       const avatarURL = req.file.path;
-      // console.log(req.user);
-      // console.log(req.file.path);
   
       await User.UserNew.findByIdAndUpdate(_id, { avatarURL }, { new: true });
       res.status(200).json({ avatarURL });

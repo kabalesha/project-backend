@@ -16,10 +16,18 @@
       {
         "name": "Auth",
         "description": "Authorization endpoints"
-      }
+      },
+      {
+        "name": "User",
+        "description": "User endpoints"
+       },
+       {
+        "name": "Water",
+        "description": "Water endpoints"
+       }
     ],
     "paths": {
-      "/auth/register": {
+      "/auth/signup": {
         "post": {
           "tags": ["Auth"],
           "summary": "User registration",
@@ -89,9 +97,9 @@
           }
         }
       },
-      "/auth/login": {
+      "/auth/signin": {
         "post": {
-          "tags": ["Users"],
+          "tags": ["Auth"],
           "summary": "User login",
           "parameters": [],
           "requestBody": {
@@ -149,9 +157,9 @@
           }
         }
       },
-      "/auth/current": {
+      "/user/current": {
         "get": {
-          "tags": ["Users"],
+          "tags": ["User"],
           "summary": "Get current user",
           "parameters": [],
           "security": [{ "Bearer": [] }],
@@ -199,10 +207,10 @@
           }
         }
       },
-      "/auth/create": {
+      "/user/add-avatar": {
         "post": {
           "tags": ["Users"],
-          "summary": "User data create",
+          "summary": "User add avatar",
           "parameters": [],
           "security": [{ "Bearer": [] }],
           "requestBody": {
@@ -270,10 +278,10 @@
           }
         }
       },
-      "/auth/update": {
+      "/user/update": {
         "patch": {
           "tags": ["Users"],
-          "summary": "User data create",
+          "summary": "User update data",
           "parameters": [],
           "security": [{ "Bearer": [] }],
           "requestBody": {
@@ -343,7 +351,7 @@
       },
       "/auth/logout": {
         "post": {
-          "tags": ["Users"],
+          "tags": ["Auth"],
           "summary": "User logout",
           "parameters": [],
           "security": [{ "Bearer": [] }],
@@ -385,46 +393,343 @@
         }
       }
     },
+    "/water": {
+      "get": {
+        "tags": ["Water"],
+        "summary": "Get Day Water Norma",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDiaryByDateResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/water/get/:waterId": {
+      "get": {
+        "tags": ["Water"],
+        "summary": "Get All",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDiaryByDateResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/water/add": {
+      "post": {
+        "tags": ["Water"],
+        "summary": "Add Water",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDiaryByDateResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "water/update/:waterId": {
+      "patch": {
+        "tags": ["Water"],
+        "summary": "Update Water by Id",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDiaryByDateResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "water/delete/:waterId": {
+      "delete": {
+        "tags": ["Water"],
+        "summary": "Delete Water by Id",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {},
+        "responses": {
+          "201": {
+            "description": "ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetDiaryByDateResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/errorNotFoundResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "components": {
       "schemas": {
         "RegistrationRequest": {
+          "type": "object",
+          "required": ["name", "email", "password", "repeatPassword"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User name"
+            },
+            "email": {
+              "type": "string",
+              "description": "User email",
+              "format": "email"
+            },
+            "password": {
+              "type": "string",
+              "description": "User password",
+              "example": "ww1234567"
+            },
+            "repeatPassword": {
+              "type": "string",
+              "description": "User password",
+              "example": "ww1234567"
+            }
+          }
+        },
+        "RegistrationResponse": {
+          "type": "object",
+          "properties": {
+            "user": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "User name"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "User email"
+                }
+              }	
+            },
+            "message": {
+              "type": "string",
+              "descroption": "Message"
+            } 
+          }
+        },
+        "LoginRequest": {
           "type": "object",
           "required": ["email", "password"],
           "properties": {
             "email": {
               "type": "string",
-              "description": "User's email",
+              "description": "User email",
               "format": "email"
             },
             "password": {
               "type": "string",
-              "description": "User's password",
-              "example": "qwerty123"
+              "description": "User password",
+              "example": "ww1234567"
             }
           }
         },
-        "RegistrationResponse": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "description": "User's email",
-                "format": "email"
-              },
-              "userId": {
-                "type": "number",
-                "description": "User's id",
-                "example": "32143232436545474"
-              }
+        "LogoutRequest": {
+          "type": "object",
+          "required": ["_id"],
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "User id"
             }
-          },
-          "example": [
-            { "email": "1@gmail.com", "userId": "1" },
-            { "email": "2@gmail.com", "userId": "2" }
-          ]
-        }
+          }
+        },
+        "AvatarsRequest": {
+          "type": "object",
+          "required": ["_id", "avatarURL"],
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "User id"
+            },
+            "avatarURL": {
+              "type": "string",
+              "description": "New avatar URL"
+            }
+          }
+        },
+        "VerifyEmailRequest": {
+          "type": "object",
+          "required": ["email"],
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User email",
+              "format": "email"
+            }
+          }
+        },       
+        "LoginResponse": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "User token"
+            },
+            "user": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "User name"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "User email"
+                },
+                "avatar": {
+                  "type": "string",
+                  "descroption": "Avatar URL"
+                }
+              }	
+            }					 
+          }
+        },
+        "CurrentResponse": {
+          "type": "object",
+          "required": ["name", "email", "avatarURL"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User name"
+            },
+            "email": {
+              "type": "string",
+              "description": "User email",
+              "format": "email"
+            },
+            "avatarURL": {
+              "type": "string",
+              "description": "Avatar URL"
+            }
+          }
+        },
+        "LogoutResponse": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "descroption": "Message",
+              "example": "logout was successfull"
+            }
+          }
+        },
+        "AvatarsResponse": {
+          "type": "object",
+          "properties": {
+            "avatarURL": {
+              "type": "string",
+              "descroption": "New avatar URL"
+            }
+          }
+        },
+        "VerifyEmailResponse": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "descroption": "Message"
+            }
+          }
+        },       
+        "ErrorResponse": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "descroption": "Message"
+            }
+          }
+        }			
       },
       "securitySchemes": {
         "Bearer": {
