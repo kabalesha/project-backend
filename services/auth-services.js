@@ -53,7 +53,11 @@ const signIn = async (body) => {
 };
 
 const logout = async (userId) => {
-  await User.UserNew.findByIdAndUpdate({ _id: userId }, { token: "" });
+  const user = await User.UserNew.findByIdAndUpdate(
+    { _id: userId },
+    { token: "" }
+  );
+  if (!user) throw HttpError(404, "User not found");
 };
 
 const verifyUser = async (verificationToken) => {
