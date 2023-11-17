@@ -5,7 +5,6 @@ import {
   runValidatorsAtUpdate,
 } from "../helpers/index.js";
 
-const passwordValidationRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 const emailValidationRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const schemaUser = new Schema(
@@ -23,9 +22,8 @@ const schemaUser = new Schema(
       type: String,
       required: [true, "Set password for user"],
     },
-
     token: String,
-   
+
     verify: {
       type: Boolean,
       default: false,
@@ -60,20 +58,23 @@ const userSignUpSchema = yup.object().shape({
   email: yup.string().email(emailValidationRegex).required("Email is required"),
   password: yup
     .string()
-    .matches(passwordValidationRegex)
-    .min(8)
-    .max(48)
+    .min(8, "Min 6 characters")
+    .max(48, "Max 48 characters")
     .required("Password is required"),
   repeatPassword: yup
     .string()
-    .min(8)
-    .max(48)
+    .min(8, "Min 6 characters")
+    .max(48, "Max 48 characters")
     .required("RepeatPassword is required"),
 });
 
 const userSignInSchema = yup.object().shape({
   email: yup.string().email(emailValidationRegex).required("Email is required"),
-  password: yup.string().min(8).max(48).required("Password is required"),
+  password: yup
+    .string()
+    .min(8, "Min 6 characters")
+    .max(48, "Max 48 characters")
+    .required("Password is required"),
 });
 
 const user = {
