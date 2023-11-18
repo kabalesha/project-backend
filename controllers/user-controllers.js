@@ -1,16 +1,5 @@
 import User from "../models/User.js";
-import jwt from "jsonwebtoken";
-import {HttpError} from "../middlewares/index.js";
 import ControllerWrapper from "../utils/ControllerWrapper.js";
-import gravatar from "gravatar";
-import Jimp from "jimp";
-import path from "path";
-import fs from "fs/promises";
-import { nanoid } from "nanoid";
-
-const {JWT_SECRET, BASE_URL} = process.env;
-const avatarsPath = path.resolve("public", "avatars");
-
  
 const addAvatar = async (req, res) => {
     try {
@@ -42,12 +31,12 @@ const addAvatar = async (req, res) => {
       new: true,
     });
 
-    const { name, email, gender, dailyNorma, avatarURL } = updatedData;
+    const { name, email, gender, dailyNorma } = updatedData;
 
     await updatedData.save();
 
     if (updatedData) {
-      res.status(201).json({name, email, gender, dailyNorma, avatarURL});
+      res.status(201).json({name, email, gender, dailyNorma});
     } else {
       res.status(404).json({ message: 'User not found' });
     }
@@ -55,7 +44,6 @@ const addAvatar = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
 
 export default {
     addAvatar: ControllerWrapper(addAvatar),
