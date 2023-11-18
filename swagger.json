@@ -23,23 +23,23 @@
     },
     {
       "name": "WaterRate",
-      "description": "User water rate endpoints"
+      "description": "Water endpoints"
     },
     {
-      "name": "Water inputs",
+      "name": "WaterFields",
       "description": "Total amount of water consumed by the User"
     },
     {
       "name": "Water",
-      "description": "Water endpoint for adding, editing and deleting information about water input "
+      "description": "Endpoint: water update"
     },
     {
-      "name": "Today",
-      "description": "Endpoint for getting list of water consume and percentage of daily norma for today "
+      "name": "WaterToday",
+      "description": "Endpoint: for getting list of water for today"
     },
     {
-      "name": "Month",
-      "description": "Endpoint for getting information of water consumption for the collected month "
+      "name": "WaterMonth",
+      "description": "Endpoint: water consumption for the month selected"
     }
   ],
   "paths": {
@@ -49,7 +49,7 @@
         "summary": "User registration",
         "parameters": [],
         "requestBody": {
-          "description": "Signup's object",
+          "description": "Signup object",
           "required": true,
           "content": {
             "application/json": {
@@ -84,10 +84,10 @@
     "/auth/signin": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Sign in user",
+        "summary": "Signin user",
         "parameters": [],
         "requestBody": {
-          "description": "Signin's object",
+          "description": "Signin object",
           "required": true,
           "content": {
             "application/json": {
@@ -99,7 +99,7 @@
         },
         "responses": {
           "200": {
-            "description": "Sign in user",
+            "description": "Signin user",
             "content": {
               "application/json": {
                 "schema": {
@@ -137,18 +137,18 @@
         }
       }
     },
-    "/auth/reset-password": {
+    "/auth/update-password": {
       "post": {
         "tags": ["Auth"],
-        "summary": "Reset user's password",
+        "summary": "Update user password",
         "parameters": [],
         "requestBody": {
-          "description": "User's email",
+          "description": "User email",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthResetPasswordRequest"
+                "$ref": "#/components/schemas/UserUpdatePasswordRequest"
               }
             }
           }
@@ -159,7 +159,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthResetPasswordResponse"
+                  "$ref": "#/components/schemas/UserUpdatePasswordResponse"
                 }
               }
             }
@@ -194,7 +194,7 @@
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
-            "description": "Avatar's URL",
+            "description": "Avatar URL",
             "content": {
               "application/json": {
                 "schema": {
@@ -249,7 +249,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserChangeInfoRequest"
+                "$ref": "#/components/schemas/UserUpdateRequest"
               }
             }
           }
@@ -261,7 +261,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserChangeInfoResponse"
+                  "$ref": "#/components/schemas/UserUpdateResponse"
                 }
               }
             }
@@ -280,7 +280,7 @@
     "/water-rate/": {
       "patch": {
         "tags": ["WaterRate"],
-        "summary": "Change user's water rate",
+        "summary": "Change user water rate",
         "parameters": [],
         "requestBody": {
           "description": "New water rate",
@@ -318,7 +318,7 @@
     },
     "/waterFields/": {
       "get": {
-        "tags": ["Water fields"],
+        "tags": ["WaterFields"],
         "summary": "All water entries by User",
         "parameters": [
           { "in": "query", "name": "page" },
@@ -332,7 +332,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetAllWaterInputsByUserResponse"
+                  "$ref": "#/components/schemas/GetAllWaterFieldsByUserResponse"
                 }
               }
             }
@@ -351,12 +351,12 @@
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Add new field of water",
+          "description": "Add field of water",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddNewFieldRequest"
+                "$ref": "#/components/schemas/AddFieldRequest"
               }
             }
           }
@@ -367,7 +367,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddNewFieldResponse"
+                  "$ref": "#/components/schemas/AddFieldResponse"
                 }
               }
             }
@@ -386,7 +386,7 @@
     "/water/{id}": {
       "delete": {
         "tags": ["Water"],
-        "summary": "Delete info about water field",
+        "summary": "Delete water field",
         "parameters": [
           {
             "in": "path",
@@ -395,7 +395,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Dynamic parameter ID of water input records."
+            "description": "Dynamic water ID field."
           }
         ],
         "security": [{ "Bearer": [] }],
@@ -419,7 +419,7 @@
     "/water/{id}/waterVolume": {
       "patch": {
         "tags": ["Water"],
-        "summary": "Update info about water input",
+        "summary": "Update info about water field",
         "parameters": [
           {
             "in": "path",
@@ -428,7 +428,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Dynamic parameter ID of water input records."
+            "description": "Dynamic water ID field.."
           }
         ],
         "security": [{ "Bearer": [] }],
@@ -438,18 +438,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EditInputRequest"
+                "$ref": "#/components/schemas/EditFieldRequest"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Input Successfully changed",
+            "description": "Field Successfully changed",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddNewInputResponse"
+                  "$ref": "#/components/schemas/AddFieldResponse"
                 }
               }
             }
@@ -467,7 +467,7 @@
     },
     "/today/": {
       "get": {
-        "tags": ["Today"],
+        "tags": ["WaterToday"],
         "summary": "Get list of water consume and percentage of daily norma of User for today",
         "parameters": [],
         "security": [{ "Bearer": [] }],
@@ -478,7 +478,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetStatisticsForToday"
+                  "$ref": "#/components/schemas/GetStatisticsToday"
                 }
               }
             }
@@ -492,7 +492,7 @@
     },
     "/month/{monthNumber} ": {
       "get": {
-        "tags": ["Month"],
+        "tags": ["WaterMonth"],
         "summary": "Get list of water consume and percentage of daily norma of User for today",
         "parameters": [
           {
@@ -515,7 +515,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetStatisticsForMonth"
+                  "$ref": "#/components/schemas/GetStatisticsMonth"
                 }
               }
             }
@@ -557,13 +557,13 @@
           }
         }
       },
-      "AuthResetPasswordRequest": {
+      "UserUpdatePasswordRequest": {
         "type": "object",
         "required": ["email"],
         "properties": {
           "email": {
             "type": "string",
-            "description": "User's email",
+            "description": "User email",
             "format": "email"
           }
         }
@@ -579,33 +579,33 @@
           }
         }
       },
-      "UserChangeInfoRequest": {
+      "UserUpdateRequest": {
         "type": "object",
         "properties": {
           "email": {
             "type": "string",
-            "description": "User's email",
+            "description": "User email",
             "format": "email"
           },
           "userName": {
             "type": "string",
-            "description": "User's name",
+            "description": "User name",
             "example": "Ajax"
           },
           "gender": {
             "type": "string",
-            "description": "User's gender",
+            "description": "User gender",
             "example": "male",
             "enum": ["male", "female"]
           },
           "oldPassword": {
             "type": "string",
-            "description": "Old user's password",
+            "description": "Old user password",
             "example": "ww123456"
           },
           "newPassword": {
             "type": "string",
-            "description": "New user's password",
+            "description": "New user password",
             "example": "ww1234567"
           }
         }
@@ -616,7 +616,7 @@
         "properties": {
           "waterRate": {
             "type": "integer",
-            "description": "User's water rate",
+            "description": "User water rate",
             "example": 1800
           }
         }
@@ -626,28 +626,28 @@
         "properties": {
           "email": {
             "type": "string",
-            "description": "User's email",
+            "description": "User email",
             "format": "email"
           },
           "userName": {
             "type": "string",
-            "description": "User's name",
+            "description": "User name",
             "example": ""
           },
           "avatarURL": {
             "type": "string",
-            "description": "User's avatar",
+            "description": "User avatar",
             "example": ""
           },
           "gender": {
             "type": "string",
-            "description": "User's gender",
+            "description": "User gender",
             "example": "female",
             "enum": ["male", "female"]
           },
           "waterRate": {
             "type": "integer",
-            "description": "User's daily water rate",
+            "description": "User daily water rate",
             "example": "1800"
           }
         }
@@ -657,33 +657,32 @@
         "properties": {
           "email": {
             "type": "string",
-            "description": "User's email",
+            "description": "User email",
             "format": "email"
           },
           "userName": {
             "type": "string",
-            "description": "User's name",
+            "description": "User name",
             "example": "Ajax"
           },
           "avatarURL": {
             "type": "string",
-            "description": "User's avatar",
+            "description": "User avatar",
             "example": "https://res.cloudinary.com/dipqgmp1j/image/upload/v1700162384/avatars/6556164717c36663106ef015.jpg"
           },
           "gender": {
             "type": "string",
-            "description": "User's gender",
+            "description": "User gender",
             "example": "male",
             "enum": ["male", "female"]
           },
           "waterRate": {
             "type": "integer",
-            "description": "User's daily water rate",
+            "description": "User daily water rate",
             "example": "1800"
           }
         }
       },
-
       "UserInfoWithTokenSingupResponse": {
         "type": "object",
         "properties": {
@@ -710,32 +709,32 @@
           }
         }
       },
-      "UserChangeAvatarResponse": {
+      "UserUpdateAvatarResponse": {
         "type": "object",
         "properties": {
           "avatarURL": {
             "type": "string",
-            "description": "Avatar's URL",
+            "description": "Avatar URL",
             "example": "https://res.cloudinary.com/dipqgmp1j/image/upload/v1700162384/avatars/6556164717c36663106ef015.jpg"
           }
         }
       },
-      "UserChangeInfoResponse": {
+      "UserUpdateInfoResponse": {
         "type": "object",
         "properties": {
           "email": {
             "type": "string",
-            "description": "User's email",
+            "description": "User email",
             "format": "email"
           },
           "userName": {
             "type": "string",
-            "description": "User's name",
+            "description": "User name",
             "example": "Ajax"
           },
           "gender": {
             "type": "string",
-            "description": "User's gender",
+            "description": "User gender",
             "example": "male",
             "enum": ["male", "female"]
           }
@@ -746,12 +745,12 @@
         "properties": {
           "waterRate": {
             "type": "integer",
-            "description": "User's water rate",
+            "description": "User water rate",
             "example": 1800
           }
         }
       },
-      "GetAllWaterInputsByUserResponse": {
+      "GetAllWaterFieldsByUserResponse": {
         "type": "array",
         "items": {
           "type": "object",
@@ -770,7 +769,7 @@
             },
             "owner": {
               "type": "string",
-              "description": "User's id"
+              "description": "User id"
             }
           }
         },
@@ -792,7 +791,7 @@
       "GetTotalDataByCurrentDayResponse": {
         "type": "object",
         "properties": {
-          "waterInputsForToday": {
+          "waterFieldsToday": {
             "type": "array",
             "items": {
               "type": "object",
@@ -822,7 +821,7 @@
           }
         },
         "example": {
-          "waterInputsForToday": [
+          "waterFieldsToday": [
             {
               "_id": "65552c689b99668f40656b07",
               "waterVolume": 1,
@@ -839,7 +838,7 @@
           "dailyNormFulfillment": 50
         }
       },
-      "AddNewInputRequest": {
+      "AddFieldRequest": {
         "type": "object",
         "required": ["waterVolume", "date"],
         "properties": {
@@ -849,12 +848,12 @@
           },
           "date": {
             "type": "string",
-            "description": "time of water input"
+            "description": "time of water field"
           }
         },
         "example": { "waterVolume": 900, "date": "2023-11-16T11:57:46.882+00:00" }
       },
-      "AddNewInputResponse": {
+      "AddFieldResponse": {
         "type": "object",
         "properties": {
           "waterVolume": {
@@ -863,15 +862,15 @@
           },
           "date": {
             "type": "string",
-            "description": "time of water input"
+            "description": "time of water field"
           },
           "owner": {
             "type": "string",
-            "description": "User'd ID"
+            "description": "User ID"
           },
           "_id": {
             "type": "string",
-            "description": "ID of water input records"
+            "description": "ID of water field records"
           },
 
           "createdAt": {
@@ -892,33 +891,33 @@
           "updatedAt": "2023-11-16T11:57:46.882+00:00"
         }
       },
-      "EditInputRequest": {
+      "EditFieldRequest": {
         "type": "object",
         "required": ["waterVolume"],
         "properties": {
           "waterVolume": {
             "type": "integer",
-            "description": "quantity of drunk water",
+            "description": "quantity water",
             "example": 100
           }
         }
       },
-      "GetStatisticsForToday": {
+      "GetStatisticsToday": {
         "type": "object",
         "properties": {
-          "waterInputsForToday": {
+          "waterFieldsToday": {
             "type": "array",
-            "description": "All inputs of the water per current day",
+            "description": "All fields of the water per current day",
             "items": {
               "type": "object",
               "properties": {
                 "waterVolume": {
                   "type": "integer",
-                  "description": "The portion of water consumed in a single entry."
+                  "description": "Portion of water consumed at one time."
                 },
                 "date": {
                   "type": "string",
-                  "description": "Time of water input."
+                  "description": "Time of water field."
                 },
                 "owner": {
                   "type": "string",
@@ -926,7 +925,7 @@
                 },
                 "_id": {
                   "type": "string",
-                  "description": "ID of water input records."
+                  "description": "ID of water field records."
                 }
               }
             }
@@ -937,7 +936,7 @@
           }
         },
         "example": {
-          "waterInputsForToday": [
+          "waterFieldsToday": [
             {
               "_id": "65548f162e039b83aff62c11",
               "waterVolume": 1000,
@@ -948,7 +947,7 @@
           "dailyNormFulfillment": 50
         }
       },
-      "GetStatisticsForMonth": {
+      "GetStatisticsMonth": {
         "type": "array",
         "items": {
           "type": "object",

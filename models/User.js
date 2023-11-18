@@ -11,7 +11,6 @@ const schemaUser = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is a required field"],
     },
     email: {
       type: String,
@@ -38,7 +37,7 @@ const schemaUser = new Schema(
     },
     dailyNorma: {
       type: String,
-      default: "2L",
+      default: "1,8L",
     },
     gender: {
       type: String,
