@@ -11,7 +11,6 @@ const schemaUser = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is a required field"],
     },
     email: {
       type: String,
