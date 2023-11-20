@@ -77,11 +77,23 @@ const verifyUser = async (verificationToken) => {
   return user;
 };
 
+const refresh = async (body) => {
+  const { email } = body;
+
+  const userFind = await User.UserNew.findOne({ email });
+  if (!userFind) throw HttpError(401, "User not found");
+
+  return {
+    email,
+  };
+};
+
 const authServices = {
   signUp,
   signIn,
   logout,
   verifyUser,
+  refresh,
 };
 
 export default authServices;
