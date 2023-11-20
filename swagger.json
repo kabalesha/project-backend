@@ -31,7 +31,7 @@
     },
     {
       "name": "Water",
-      "description": "Endpoint: water update"
+      "description": "Endpoint: water add, delete, patch"
     },
     {
       "name": "WaterToday",
@@ -277,13 +277,13 @@
         }
       }
     },
-    "/water-rate/": {
+    "/update/dailyNorma": {
       "patch": {
         "tags": ["WaterRate"],
-        "summary": "Change user water rate",
+        "summary": "Change user waterRate",
         "parameters": [],
         "requestBody": {
-          "description": "New water rate",
+          "description": "New waterRate",
           "required": true,
           "content": {
             "application/json": {
@@ -296,7 +296,7 @@
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
-            "description": "New water rate value",
+            "description": "New waterRate value",
             "content": {
               "application/json": {
                 "schema": {
@@ -316,7 +316,7 @@
         }
       }
     },
-    "/waterFields/": {
+    "/": {
       "get": {
         "tags": ["WaterFields"],
         "summary": "All water entries by User",
@@ -344,7 +344,7 @@
         }
       }
     },
-    "/water/": {
+    "/add": {
       "post": {
         "tags": ["Water"],
         "summary": "Add info about water field",
@@ -383,7 +383,7 @@
         }
       }
     },
-    "/water/{id}": {
+    "/delete/:waterId": {
       "delete": {
         "tags": ["Water"],
         "summary": "Delete water field",
@@ -416,7 +416,7 @@
         }
       }
     },
-    "/water/{id}/waterVolume": {
+    "/update/:waterId": {
       "patch": {
         "tags": ["Water"],
         "summary": "Update info about water field",
@@ -465,7 +465,7 @@
         }
       }
     },
-    "/today/": {
+    "/dailyNorma": {
       "get": {
         "tags": ["WaterToday"],
         "summary": "Get list of water consume and percentage of daily norma of User for today",
@@ -490,7 +490,7 @@
         }
       }
     },
-    "/month/{monthNumber} ": {
+    "/month ": {
       "get": {
         "tags": ["WaterMonth"],
         "summary": "Get list of water consume and percentage of daily norma of User for today",
