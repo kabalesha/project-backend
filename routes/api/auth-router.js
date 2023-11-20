@@ -25,6 +25,6 @@ router.post("/logout", authenticate, authController.logout);
 
 router.get("/verify/:verificationToken", authController.verify);
 
-router.get("/refresh", authenticate, authController.refresh);
+router.get("/refresh", authController.refresh);
 
 export default router;
