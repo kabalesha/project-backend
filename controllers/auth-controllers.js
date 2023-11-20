@@ -39,7 +39,9 @@ const verify = async (req, res) => {
 const refresh = async (req, res) => {
   const user = await authService(req.body);
 
-  res.send(200).json({ token: user.token });
+  res.send(200).json({
+    user: user.email,
+  });
 };
 
 const authController = {

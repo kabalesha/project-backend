@@ -78,13 +78,10 @@ const verifyUser = async (verificationToken) => {
 };
 
 const refresh = async (body) => {
-  const { token, email } = body;
+  const { email } = body;
 
-  const userFind = await User.UserNew.findOne({ email }, { token });
+  const userFind = await User.UserNew.findOne({ email });
   if (!userFind) throw HttpError(401, "User not found");
-
-  //  const { accessToken, refreshToken } = assignToken(user);
-  //  await User.findByIdAndUpdate(user._id, { refreshToken });
 
   return {
     email,
