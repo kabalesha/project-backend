@@ -719,7 +719,7 @@
           }
         }
       },
-      "UserUpdateInfoResponse": {
+      "UserUpdateResponse": {
         "type": "object",
         "properties": {
           "email": {
