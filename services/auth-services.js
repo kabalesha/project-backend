@@ -53,31 +53,29 @@ const signIn = async (body) => {
 };
 
 const logout = async (userId) => {
-  await User.UserNew.findByIdAndUpdate({ _id: userId }, { token: "" });
+  const user = await User.UserNew.findByIdAndUpdate(
+    { _id: userId },
+    { token: "" }
+  );
+  if (!user) throw HttpError(404, "User not found");
 };
 
-const verifyUser = async (verificationToken) => {
-  const userVerify = await User.UserNew.findOne({ verificationToken });
+const refreshUser = async (body) => {
+  const { email } = body;
 
-  if (!userVerify) throw HttpError(404, "User not found");
+  const userFind = await User.UserNew.findOne({ email });
+  if (!userFind) throw HttpError(401, "User not found");
 
-  const user = await User.UserNew.findByIdAndUpdate(
-    userVerify._id,
-    {
-      verify: true,
-      verificationToken: null,
-    },
-    { new: true }
-  );
-
-  return user;
+  return {
+    email,
+  };
 };
 
 const authServices = {
   signUp,
   signIn,
   logout,
-  verifyUser,
+  refreshUser,
 };
 
 export default authServices;

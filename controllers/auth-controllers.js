@@ -28,19 +28,20 @@ const logout = async (req, res) => {
   res.status(204).json({ message: "Logout success" });
 };
 
-const verify = async (req, res) => {
-  const { verificationToken } = req.params;
+const refresh = async (req, res) => {
+  const user = await authService.refreshUser(req.body);
 
-  await authService.verifyUser(verificationToken);
-
-  res.json({ message: "Verification successful" });
+  res.send(200).json({
+    user: user.email,
+  });
 };
 
 const authController = {
   signUp: ControllerWrapper(signUp),
   signIn: ControllerWrapper(signIn),
   logout: ControllerWrapper(logout),
-  verify: ControllerWrapper(verify),
+
+  refresh: ControllerWrapper(refresh),
 };
 
 export default authController;
