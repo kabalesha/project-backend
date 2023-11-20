@@ -9,7 +9,9 @@ const waterAddValidate = validateBody(waterAddSchema);
 
 router.use(authenticate);
 
-router.get("/");
+router.get("/today", waterControllers.getForToday);
+
+router.get("/month", waterControllers.getByMonth);
 
 router.get("/getById/:waterId", isValidId, waterControllers.getById);
 
@@ -23,8 +25,6 @@ router.patch(
 );
 
 router.delete("/delete/:waterId", isValidId, waterControllers.deleteById);
-
-router.get("/dailyNorma", waterControllers.getDailyNorma);
 
 router.patch("/update/dailyNorma", waterControllers.setDailyNorma);
 
