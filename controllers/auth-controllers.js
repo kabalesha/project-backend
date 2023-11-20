@@ -36,11 +36,18 @@ const verify = async (req, res) => {
   res.json({ message: "Verification successful" });
 };
 
+const refresh = async (req, res) => {
+  const user = await authService(req.body);
+
+  res.send(200).json({ token: user.token });
+};
+
 const authController = {
   signUp: ControllerWrapper(signUp),
   signIn: ControllerWrapper(signIn),
   logout: ControllerWrapper(logout),
   verify: ControllerWrapper(verify),
+  refresh: ControllerWrapper(refresh),
 };
 
 export default authController;
