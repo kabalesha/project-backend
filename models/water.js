@@ -8,12 +8,15 @@ const waterSchema = new Schema({
     required: true,
   },
   amount: {
-    type: String,
-    required: [true, "Set amount of water"],
+    type: Number,
+    min: 1,
+    max: 5000,
+    required: [true, "Enter the value of the water used"],
   },
   date: {
-    type: String,
-    required: true,
+    type: Date,
+    default: Date.now,
+    required: [true, "Enter the time of entering"],
   },
 });
 
