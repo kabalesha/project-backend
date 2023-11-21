@@ -90,6 +90,7 @@ const setDailyNorma = async (req, res) => {
 
 const addWater = async (req, res) => {
   const { _id: owner } = req.user;
+
   const result = await Water.create({ owner, ...req.body });
   res.status(201).json(result);
 };
