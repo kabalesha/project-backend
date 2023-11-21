@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.patch("/add-avatar", authenticate, upload.single("avatarURL"), userController.addAvatar);
 router.get("/current", authenticate, userController.getCurrent);
-router.patch("/update", authenticate, upload.single("avatarURL"), userController.updateUserData);
+router.patch("/update", authenticate, userController.updateUserData);
 
 export default router;

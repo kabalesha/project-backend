@@ -111,7 +111,7 @@ const updateById = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.status(201).json(result);
+  res.status(200).json(result);
 };
 
 const deleteById = async (req, res) => {
