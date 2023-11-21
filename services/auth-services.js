@@ -64,10 +64,11 @@ const refreshUser = async (body) => {
   const { email } = body;
 
   const userFind = await User.UserNew.findOne({ email });
+
   if (!userFind) throw HttpError(401, "User not found");
 
   return {
-    email,
+    token: userFind.token,
   };
 };
 
