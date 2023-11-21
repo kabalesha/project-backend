@@ -49,7 +49,7 @@ const schemaUser = new Schema(
     },
     gender: {
       type: String,
-      default: "male",
+      default: "null",
     },
   },
   { versionKey: false, timestamps: true }

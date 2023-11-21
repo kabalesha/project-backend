@@ -26,10 +26,6 @@
       "description": "Water endpoints"
     },
     {
-      "name": "WaterFields",
-      "description": "Total amount of water consumed by the User"
-    },
-    {
       "name": "Water",
       "description": "Endpoint: water add, delete, patch"
     },
@@ -65,7 +61,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserInfoWithTokenSingupResponse"
+                  "$ref": "#/components/schemas/UserInfoWithTokenSignupResponse"
                 }
               }
             }
@@ -103,7 +99,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserInfoWithTokenSinginResponse"
+                  "$ref": "#/components/schemas/UserInfoWithTokenSigninResponse"
                 }
               }
             }
@@ -186,7 +182,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/UserChangeAvatarRequest"
+                "$ref": "#/components/schemas/UserUpdateAvatarRequest"
               }
             }
           }
@@ -194,17 +190,17 @@
         "security": [{ "Bearer": [] }],
         "responses": {
           "200": {
-            "description": "Avatar URL",
+            "description": "Avatar's file",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserChangeAvatarResponse"
+                  "$ref": "#/components/schemas/UserUpdateAvatarResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "File not found, File extention not allow",
+            "description": "File not found",
             "content": {}
           },
           "401": {
@@ -316,34 +312,6 @@
         }
       }
     },
-    "/": {
-      "get": {
-        "tags": ["WaterFields"],
-        "summary": "All water entries by User",
-        "parameters": [
-          { "in": "query", "name": "page" },
-          { "in": "query", "name": "limit" }
-        ],
-        "security": [{ "Bearer": [] }],
-        "requestBody": {},
-        "responses": {
-          "200": {
-            "description": "Successfull operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/GetAllWaterFieldsByUserResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Not authorized",
-            "content": {}
-          }
-        }
-      }
-    },
     "/add": {
       "post": {
         "tags": ["Water"],
@@ -383,7 +351,7 @@
         }
       }
     },
-    "/delete/:waterId": {
+    "/delete/{waterId}": {
       "delete": {
         "tags": ["Water"],
         "summary": "Delete water field",
@@ -416,7 +384,7 @@
         }
       }
     },
-    "/update/:waterId": {
+    "/update/{waterId}": {
       "patch": {
         "tags": ["Water"],
         "summary": "Update info about water field",
@@ -465,7 +433,7 @@
         }
       }
     },
-    "/dailyNorma": {
+    "/today": {
       "get": {
         "tags": ["WaterToday"],
         "summary": "Get list of water consume and percentage of daily norma of User for today",
@@ -490,19 +458,19 @@
         }
       }
     },
-    "/month ": {
+    "/month/{selectedMounth}": {
       "get": {
         "tags": ["WaterMonth"],
         "summary": "Get list of water consume and percentage of daily norma of User for today",
         "parameters": [
           {
             "in": "path",
-            "name": "monthNumber",
+            "name": "selectedMounth",
             "required": true,
             "schema": {
               "type": "integer"
             },
-            "description": "Month number for which information is requested",
+            "description": "Selected Mounth for which information is requested",
             "minimum": 1,
             "maximum": 12
           }
@@ -532,7 +500,7 @@
     "schemas": {
       "AuthRequest": {
         "type": "object",
-        "required": ["name", "email", "password", "repeatPassword"],
+        "required": ["name", "email", "password"],
         "properties": {
           "name": {
             "type": "string",
@@ -546,11 +514,6 @@
             "example": "qweqwe@mail.com"
           },
           "password": {
-            "type": "string",
-            "description": "User password",
-            "example": "ww123456"
-          },
-          "repeatPassword": {
             "type": "string",
             "description": "User password",
             "example": "ww123456"
@@ -568,14 +531,26 @@
           }
         }
       },
-      "UserChangeAvatarRequest": {
+      "UserUpdateAvatarRequest": {
         "type": "object",
-        "required": ["avatar"],
+        "required": ["avatarURL"],
         "properties": {
           "avatar": {
             "type": "string",
-            "description": "File of avatar",
-            "format": "multipart/form-data"
+            "content": "img/png",
+            "example": "https://res.cloudinary.com/dipqgmp1j/image/upload/v1700162384/avatars/6556164717c36663106ef015.jpg",
+            "description": "Avatar's file",
+            "format": "binary"
+          }
+        }
+      },
+      "UserUpdateAvatarResponse": {
+        "type": "object",
+        "properties": {
+          "avatarURL": {
+            "type": "string",
+            "description": "Avatar's file",
+            "example": "https://res.cloudinary.com/dipqgmp1j/image/upload/v1700162384/avatars/6556164717c36663106ef015.jpg"
           }
         }
       },
@@ -610,9 +585,40 @@
           }
         }
       },
+      "UserUpdateResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email",
+            "format": "email"
+          },
+          "userName": {
+            "type": "string",
+            "description": "User name",
+            "example": "Ajax"
+          },
+          "gender": {
+            "type": "string",
+            "description": "User gender",
+            "example": "male",
+            "enum": ["male", "female"]
+          }
+        }
+      },
       "WaterRateRequest": {
         "type": "object",
         "required": ["waterRate"],
+        "properties": {
+          "waterRate": {
+            "type": "integer",
+            "description": "User water rate",
+            "example": 1800
+          }
+        }
+      },
+      "WaterRateResponse": {
+        "type": "object",
         "properties": {
           "waterRate": {
             "type": "integer",
@@ -648,7 +654,7 @@
           "waterRate": {
             "type": "integer",
             "description": "User daily water rate",
-            "example": "1800"
+            "example": "0"
           }
         }
       },
@@ -683,7 +689,7 @@
           }
         }
       },
-      "UserInfoWithTokenSingupResponse": {
+      "UserInfoWithTokenSignupResponse": {
         "type": "object",
         "properties": {
           "token": {
@@ -696,7 +702,7 @@
           }
         }
       },
-      "UserInfoWithTokenSinginResponse": {
+      "UserInfoWithTokenSigninResponse": {
         "type": "object",
         "properties": {
           "token": {
@@ -706,47 +712,6 @@
           },
           "user": {
             "$ref": "#/components/schemas/UserInfoResponse"
-          }
-        }
-      },
-      "UserUpdateAvatarResponse": {
-        "type": "object",
-        "properties": {
-          "avatarURL": {
-            "type": "string",
-            "description": "Avatar URL",
-            "example": "https://res.cloudinary.com/dipqgmp1j/image/upload/v1700162384/avatars/6556164717c36663106ef015.jpg"
-          }
-        }
-      },
-      "UserUpdateResponse": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User email",
-            "format": "email"
-          },
-          "userName": {
-            "type": "string",
-            "description": "User name",
-            "example": "Ajax"
-          },
-          "gender": {
-            "type": "string",
-            "description": "User gender",
-            "example": "male",
-            "enum": ["male", "female"]
-          }
-        }
-      },
-      "WaterRateResponse": {
-        "type": "object",
-        "properties": {
-          "waterRate": {
-            "type": "integer",
-            "description": "User water rate",
-            "example": 1800
           }
         }
       },

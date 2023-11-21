@@ -33,8 +33,6 @@ const addAvatar = async (req, res) => {
 
     const { name, email, gender, dailyNorma } = updatedData;
 
-    await updatedData.save();
-
     if (updatedData) {
       res.status(201).json({name, email, gender, dailyNorma});
     } else {
