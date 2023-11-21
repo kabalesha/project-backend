@@ -531,6 +531,16 @@
           }
         }
       },
+      "UserUpdatePasswordResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message",
+            "example": "A new password has been sent to your email"
+          }
+        }
+      },
       "UserUpdateAvatarRequest": {
         "type": "object",
         "required": ["avatarURL"],
