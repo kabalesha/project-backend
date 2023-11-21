@@ -68,6 +68,7 @@ const refreshUser = async (body) => {
   if (!userFind) throw HttpError(401, "User not found");
 
   return {
+    email,
     token: userFind.token,
   };
 };
