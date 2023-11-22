@@ -7,7 +7,7 @@ const router = express.Router();
 
 const waterAddValidate = validateBody(waterAddSchema);
 
-router.use(authenticate);
+// router.use(authenticate);
 
 router.get("/today", waterControllers.getForToday);
 
