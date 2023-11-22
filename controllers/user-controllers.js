@@ -15,12 +15,14 @@ const addAvatar = async (req, res) => {
   };
     
   const getCurrent = async (req, res) => {
-    const { name, email, avatarURL } = req.user;
+    const { name, email, avatarURL, dailyNorma, gender } = req.user;
         
     res.json({
       name,
       email,
       avatarURL,
+      dailyNorma,
+      gender
     })
   }
 
