@@ -5,16 +5,15 @@ const waterSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
     ref: "user",
-    required: true,
   },
   amount: {
-    type: String,
+    type: Number,
     min: 1,
     max: 5000,
     required: [true, "Enter the value of the water used"],
   },
   date: {
-    type: String,
+    type: Date,
     default: Date.now,
     required: [true, "Enter the time of entering"],
   },
