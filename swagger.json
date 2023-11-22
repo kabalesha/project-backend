@@ -623,7 +623,7 @@
           "waterRate": {
             "type": "integer",
             "description": "User water rate",
-            "example": 1800
+            "example": 2000
           }
         }
       },
@@ -633,7 +633,7 @@
           "waterRate": {
             "type": "integer",
             "description": "User water rate",
-            "example": 1800
+            "example": 2000
           }
         }
       },
