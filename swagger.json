@@ -500,13 +500,8 @@
     "schemas": {
       "AuthRequest": {
         "type": "object",
-        "required": ["name", "email", "password"],
+        "required": ["email", "password"],
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "User name",
-            "example": "Ajax"
-          },
           "email": {
             "type": "string",
             "description": "User email",
