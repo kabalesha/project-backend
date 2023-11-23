@@ -60,24 +60,10 @@ const logout = async (userId) => {
   if (!user) throw HttpError(404, "User not found");
 };
 
-const refreshUser = async (body) => {
-  const { email } = body;
-
-  const userFind = await User.UserNew.findOne({ email });
-
-  if (!userFind) throw HttpError(401, "User not found");
-
-  return {
-    email,
-    token: userFind.token,
-  };
-};
-
 const authServices = {
   signUp,
   signIn,
   logout,
-  refreshUser,
 };
 
 export default authServices;
