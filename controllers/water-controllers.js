@@ -62,7 +62,7 @@ const getStatsForDay = async (req, res) => {
   date.setMonth(adjustedMonth);
   date.setDate(adjustedDay);
 
-  waterServings = await Water.find({ date, owner });
+  const waterServings = await Water.find({ date, owner });
 
   const dailyNormFulfillment = calculateDailyFulfillment(
     waterServings,
