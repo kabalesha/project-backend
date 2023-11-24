@@ -52,6 +52,30 @@ const getByMonth = async (req, res) => {
   res.json(result);
 };
 
+const getStatsForDay = async (req, res) => {
+  const { _id: owner, waterDailyNorma } = req.user;
+  const { day, month } = req.params;
+  const adjustedDay = parseInt(day);
+  const adjustedMonth = parseInt(month) - 1;
+
+  const date = new Date();
+  date.setMonth(adjustedMonth);
+  date.setDate(adjustedDay);
+
+  waterServings = await Water.find({ date, owner });
+
+  const dailyNormFulfillment = calculateDailyFulfillment(
+    waterServings,
+    waterDailyNorma
+  );
+
+  res.json({
+    waterDailyNorma,
+    dailyNormFulfillment,
+    waterServings,
+  });
+};
+
 const getForToday = async (req, res) => {
   const { _id: owner, waterDailyNorma } = req.user;
 
@@ -134,4 +158,5 @@ export default {
   getById: ControllerWrapper(getById),
   getForToday: ControllerWrapper(getForToday),
   getByMonth: ControllerWrapper(getByMonth),
+  getStatsForDay: ControllerWrapper(getStatsForDay),
 };
