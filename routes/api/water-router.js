@@ -9,23 +9,25 @@ const waterAddValidate = validateBody(waterAddSchema);
 
 router.use(authenticate);
 
-router.get("/");
+router.get("/today", waterControllers.getForToday);
 
-router.get("/:waterId", isValidId, waterControllers.getById);
+router.get("/month", waterControllers.getByMonth);
 
-router.post("/", waterAddValidate, waterControllers.addWater);
+router.get("/stats", waterControllers.getStatsForDay);
+
+router.get("/getById/:waterId", isValidId, waterControllers.getById);
+
+router.post("/add", waterAddValidate, waterControllers.addWater);
 
 router.patch(
-  "/:waterId",
+  "/update/:waterId",
   isValidId,
   waterAddValidate,
   waterControllers.updateById
 );
 
-router.delete("/:waterId", isValidId, waterControllers.deleteById);
+router.delete("/delete/:waterId", isValidId, waterControllers.deleteById);
 
-router.get("/dailyNorma", waterControllers.getDailyNorma);
-
-router.patch("/dailyNorma", waterControllers.setDailyNorma);
+router.patch("/update/dailyNorma", waterControllers.setDailyNorma);
 
 export default router;

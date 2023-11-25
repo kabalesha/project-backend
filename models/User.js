@@ -11,7 +11,6 @@ const schemaUser = new Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is a required field"],
     },
     email: {
       type: String,
@@ -22,6 +21,13 @@ const schemaUser = new Schema(
       type: String,
       required: [true, "Set password for user"],
     },
+    waterDailyNorma: {
+      type: Number,
+      min: 1,
+      max: 15000,
+      default: 2000,
+    },
+
     token: String,
 
     verify: {
@@ -38,11 +44,11 @@ const schemaUser = new Schema(
     },
     dailyNorma: {
       type: String,
-      default: "2L",
+      default: "1,8L",
     },
     gender: {
       type: String,
-      default: "man",
+      default: "null",
     },
   },
   { versionKey: false, timestamps: true }
