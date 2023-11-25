@@ -5,8 +5,13 @@ import { validateBody } from "../../decorators/index.js";
 
 const router = express.Router();
 
-router.post("/add-avatar", authenticate, upload.single("avatarURL"), userController.addAvatar);
+// router.post("/add-avatar", authenticate, upload.single("avatarURL"), userController.addAvatar);
 router.get("/current", authenticate, userController.getCurrent);
-router.patch("/update", authenticate, upload.single("avatarURL"), userController.updateUserData);
+router.patch(
+  "/update",
+  authenticate,
+  upload.single("avatarURL"),
+  userController.updateUserData
+);
 
 export default router;
