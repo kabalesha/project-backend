@@ -14,15 +14,12 @@ const waterSchema = new Schema({
   },
   date: {
     type: Date,
-    default: Date.now,
-    required: [true, "Enter the time of entering"],
+    required: true,
   },
 });
 
 export const waterAddSchema = Joi.object({
-  amount: Joi.string().required().messages({
-    "any.required": `"amount" must be exist`,
-  }),
+  amount: Joi.string().required(),
   date: Joi.string().required(),
 });
 
