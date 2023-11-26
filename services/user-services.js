@@ -6,11 +6,11 @@ const updateUserDataService = async (_id, body) => {
     new: true,
   });
 
-  const { name, email, gender, dailyNorma } = user;
+  const { avatarURL } = user;
 
   if (!user) throw HttpError(404, "User not found");
 
-  return { name, email, gender, dailyNorma };
+  return { avatarURL };
 };
 
 const userService = {
