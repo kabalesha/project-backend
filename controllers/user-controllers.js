@@ -1,21 +1,15 @@
 import userService from "../services/user-services.js";
 import ControllerWrapper from "../utils/ControllerWrapper.js";
 
-const addAvatar = async (req, res) => {
-  const { _id } = req.user;
-  const avatarURL = req.file.path;
-  const user = await userService.addAvatarService(_id, avatarURL);
-
-  res.json({ avatarURL: user.avatarURL });
-};
-
 const getCurrent = async (req, res) => {
-  const { name, email, avatarURL } = req.user;
+  const { name, email, avatarURL, dailyNorma, gender } = req.user;
 
   res.json({
     name,
     email,
     avatarURL,
+    dailyNorma,
+    gender,
   });
 };
 
@@ -29,7 +23,6 @@ const updateUserData = async (req, res) => {
 };
 
 export default {
-  addAvatar: ControllerWrapper(addAvatar),
   getCurrent: ControllerWrapper(getCurrent),
   updateUserData: ControllerWrapper(updateUserData),
 };
