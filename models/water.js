@@ -13,7 +13,7 @@ const waterSchema = new Schema({
     required: [true, "Enter the value of the water used"],
   },
   date: {
-    type: String,
+    type: Number,
     default: Date.now,
     required: [true, "Enter the time of entering"],
   },
