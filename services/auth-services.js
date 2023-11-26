@@ -27,7 +27,7 @@ const signUp = async (body) => {
 
 const signIn = async (body) => {
   const userFind = await User.UserNew.findOne({ email: body.email });
-  if (!userFind) throw HttpError(401, "Email or password is wrong");
+  if (!userFind) throw HttpError(403, "Email or password is wrong");
 
   const comparePassword = await bcryptjs.compare(
     body.password,
@@ -35,7 +35,7 @@ const signIn = async (body) => {
   );
 
   if (!comparePassword) {
-    throw HttpError(401, "Email or password is wrong");
+    throw HttpError(403, "Email or password is wrong");
   }
 
   const payload = {
