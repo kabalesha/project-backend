@@ -15,8 +15,11 @@ const getCurrent = async (req, res) => {
 
 const updateUserData = async (req, res) => {
   const { _id } = req.user;
-
-  const { avatarURL } = await userService.updateUserDataService(_id, req.body);
+  const avatarPath = req.file.path;
+  const { avatarURL } = await userService.updateUserDataService(
+    _id,
+    avatarPath
+  );
 
   res.json({ avatarURL });
 };
