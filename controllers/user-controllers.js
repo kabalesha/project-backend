@@ -16,10 +16,9 @@ const getCurrent = async (req, res) => {
 const updateUserData = async (req, res) => {
   const { _id } = req.user;
 
-  const { name, email, gender, dailyNorma } =
-    await userService.updateUserDataService(_id, req.body);
+  const { avatarURL } = await userService.updateUserDataService(_id, req.body);
 
-  res.json({ name, email, gender, dailyNorma });
+  res.json({ avatarURL });
 };
 
 export default {
