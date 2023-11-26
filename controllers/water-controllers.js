@@ -128,7 +128,9 @@ const addWater = async (req, res) => {
 
   const convertDateLittleTime = formatTime.formatDate(user.date);
 
-  res.status(201).json({ date: convertDateLittleTime, amount: user.amount });
+  res
+    .status(201)
+    .json({ date: convertDateLittleTime, amount: user.amount, _id: user._id });
 };
 
 const getById = async (req, res) => {
@@ -142,13 +144,28 @@ const getById = async (req, res) => {
 
 const updateById = async (req, res) => {
   const { waterId } = req.params;
-  const result = await Water.findByIdAndUpdate(waterId, req.body, {
-    new: true,
-  });
+  const { date, amount } = req.body;
+
+  const convertDateFullTime = formatTime.convertTimeToFullDate(date);
+  const result = await Water.findByIdAndUpdate(
+    waterId,
+    { date: convertDateFullTime },
+    { amount },
+    {
+      new: true,
+    }
+  );
+
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.status(200).json(result);
+
+  const convertDateLittleTime = formatTime.formatDate(result.date);
+  res.status(200).json({
+    date: convertDateLittleTime,
+    amount: result.amount,
+    _id: result._id,
+  });
 };
 
 const deleteById = async (req, res) => {
@@ -157,6 +174,7 @@ const deleteById = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
+
   res.json({
     message: "Delete success",
   });
