@@ -5,7 +5,7 @@ import errorGlobal from "./middlewares/errorGlobal.js";
 import errorNotFound from "./middlewares/errorNotFound.js";
 import "dotenv/config";
 import swaggerUi from "swagger-ui-express";
-// import swaggerDocument from "./swagger.json" assert { type: "json" };
+import swaggerDocument from "./swagger.json" assert { type: "json" };
 
 import authRouter from "./routes/api/auth-router.js";
 import waterRouter from "./routes/api/water-router.js";
