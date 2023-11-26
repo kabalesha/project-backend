@@ -7,6 +7,7 @@ import {
   formatDate,
   regroupedDataByDays,
 } from "../helpers/index.js";
+import formatTime from "../helpers/formatDateBD.js";
 
 const getByMonth = async (req, res) => {
   const { _id: owner, waterDailyNorma } = req.user;
@@ -119,9 +120,15 @@ const setDailyNorma = async (req, res) => {
 
 const addWater = async (req, res) => {
   const { _id: owner } = req.user;
+  const { date, amount } = req.body;
 
-  const result = await Water.create({ owner, ...req.body });
-  res.status(201).json(result);
+  const convertDateFullTime = formatTime.convertTimeToFullDate(date);
+
+  const user = await Water.create({ owner, amount, date: convertDateFullTime });
+
+  const convertDateLittleTime = formatTime.formatDate(user.date);
+
+  res.status(201).json({ date: convertDateLittleTime, amount: user.amount });
 };
 
 const getById = async (req, res) => {
