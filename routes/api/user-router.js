@@ -9,7 +9,7 @@ router.patch(
   "/add-avatar",
   authenticate,
   upload.single("avatarURL"),
-  userController.addAvatar
+  userController.updateUserData
 );
 
 export default router;
