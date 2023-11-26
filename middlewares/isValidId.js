@@ -3,9 +3,9 @@ import { isValidObjectId } from "mongoose";
 import { HttpError } from "./index.js";
 
 const isValidId = (req, res, next) => {
-  const { id } = req.params;
-  if (!isValidObjectId(id)) {
-    return next(HttpError(404, `${id} not valid id`));
+  const { waterId } = req.params;
+  if (!isValidObjectId(waterId)) {
+    return next(HttpError(404, `${waterId} not valid id`));
   }
   next();
 };

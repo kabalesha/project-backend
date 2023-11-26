@@ -11,13 +11,18 @@ import {
 const getByMonth = async (req, res) => {
   const { _id: owner, waterDailyNorma } = req.user;
   const { monthNumber } = req.params;
-  const adjustedMonth = parseInt(monthNumber) - 1; //Уменьшаем на 1, чтобы соответствовать нумерации месяцев в JavaScript
+  // console.log(req.params);
+  // console.log(req);
+  // console.log(monthNumber);
+  const adjustedMonth = parseInt(monthNumber) - 1;
 
   const startOfMonth = new Date();
-  startOfMonth.setMonth(adjustedMonth, 1); // Устанавливает первое число месяца
+  startOfMonth.setMonth(adjustedMonth, 1);
+  startOfMonth.setHours(0, 0, 0, 0); // Устанавливает первое число месяца
 
   const endOfMonth = new Date();
   endOfMonth.setMonth(adjustedMonth + 1, 0); // Устанавливает последний день месяца
+  endOfMonth.setHours(23, 59, 59, 999);
 
   const waterInputsForThisMonth = await Water.find({
     date: {

@@ -11,7 +11,7 @@ router.use(authenticate);
 
 router.get("/today", waterControllers.getForToday);
 
-router.get("/month", waterControllers.getByMonth);
+router.get("/month/:monthNumber", waterControllers.getByMonth);
 
 router.get("/stats", waterControllers.getStatsForDay);
 
