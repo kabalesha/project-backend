@@ -21,7 +21,6 @@ const schemaUser = new Schema(
       type: String,
       required: [true, "Set password for user"],
     },
-
     waterDailyNorma: {
       type: Number,
       min: 1,

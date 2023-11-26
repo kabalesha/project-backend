@@ -13,6 +13,8 @@ router.get("/today", waterControllers.getForToday);
 
 router.get("/month", waterControllers.getByMonth);
 
+router.get("/stats", waterControllers.getStatsForDay);
+
 router.get("/getById/:waterId", isValidId, waterControllers.getById);
 
 router.post("/add", waterAddValidate, waterControllers.addWater);

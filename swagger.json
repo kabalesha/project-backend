@@ -500,13 +500,8 @@
     "schemas": {
       "AuthRequest": {
         "type": "object",
-        "required": ["name", "email", "password"],
+        "required": ["email", "password"],
         "properties": {
-          "name": {
-            "type": "string",
-            "description": "User name",
-            "example": "Ajax"
-          },
           "email": {
             "type": "string",
             "description": "User email",
@@ -528,6 +523,16 @@
             "type": "string",
             "description": "User email",
             "format": "email"
+          }
+        }
+      },
+      "UserUpdatePasswordResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Success message",
+            "example": "A new password has been sent to your email"
           }
         }
       },
@@ -613,7 +618,7 @@
           "waterRate": {
             "type": "integer",
             "description": "User water rate",
-            "example": 1800
+            "example": 2000
           }
         }
       },
@@ -623,7 +628,7 @@
           "waterRate": {
             "type": "integer",
             "description": "User water rate",
-            "example": 1800
+            "example": 2000
           }
         }
       },
