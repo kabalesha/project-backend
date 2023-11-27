@@ -119,45 +119,14 @@ const setDailyNorma = async (req, res) => {
 };
 
 const addWater = async (req, res) => {
-  const { _id: owner } = req.user;
-
-  const result = await Water.create({ owner, ...req.body });
-  res.status(201).json(result);
-};
-
-const getById = async (req, res) => {
   const { waterId } = req.params;
-  const result = await Water.findById(waterId);
-  if (!result) {
-    throw HttpError(404, "Not found");
-  }
-  res.json(result);
-};
-
-const updateById = async (req, res) => {
-  const { waterId } = req.params;
-  const { date, amount } = req.body;
-
-  const convertDateFullTime = formatTime.convertTimeToFullDate(date);
-  const result = await Water.findByIdAndUpdate(
-    waterId,
-    { date: convertDateFullTime },
-    { amount },
-    {
-      new: true,
-    }
-  );
-
-  if (!result) {
-    throw HttpError(404, "Not found");
-  }
-
-  const convertDateLittleTime = formatTime.formatDate(result.date);
-  res.status(200).json({
-    date: convertDateLittleTime,
-    amount: result.amount,
-    _id: result._id,
+  const result = await Water.findByIdAndUpdate(waterId, req.body, {
+    new: true,
   });
+  if (!result) {
+    throw HttpError(404, "Not found");
+  }
+  res.status(200).json(result);
 };
 
 const deleteById = async (req, res) => {
