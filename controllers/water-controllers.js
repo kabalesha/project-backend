@@ -120,17 +120,9 @@ const setDailyNorma = async (req, res) => {
 
 const addWater = async (req, res) => {
   const { _id: owner } = req.user;
-  const { date, amount } = req.body;
 
-  const convertDateFullTime = formatTime.convertTimeToFullDate(date);
-
-  const user = await Water.create({ owner, amount, date: convertDateFullTime });
-
-  const convertDateLittleTime = formatTime.formatDate(user.date);
-
-  res
-    .status(201)
-    .json({ date: convertDateLittleTime, amount: user.amount, _id: user._id });
+  const result = await Water.create({ owner, ...req.body });
+  res.status(201).json(result);
 };
 
 const getById = async (req, res) => {
