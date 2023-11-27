@@ -15,7 +15,7 @@ const getByMonth = async (req, res) => {
   // console.log(req.params);
   // console.log(req);
   // console.log(monthNumber);
-  const adjustedMonth = parseInt(monthNumber) - 1;
+  const adjustedMonth = parseInt(monthNumber);
 
   const startOfMonth = new Date();
   startOfMonth.setMonth(adjustedMonth, 1);
